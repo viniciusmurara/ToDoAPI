@@ -1,47 +1,56 @@
 package com.ToDoAPI.todoAPI.controller;
 
+import com.ToDoAPI.todoAPI.controller.dto.UserDTO;
 import com.ToDoAPI.todoAPI.model.Usuario;
 import com.ToDoAPI.todoAPI.repository.UsuarioRepository;
+import com.ToDoAPI.todoAPI.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("usuarios")
+@RequiredArgsConstructor
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioService service;
 
     @PostMapping
-    public Usuario salvar(@RequestBody Usuario usuario) {
-
-        usuario.setId_usuario(UUID.randomUUID());
-        return usuarioRepository.save(usuario);
+    public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
+        service.salvar(usuario);
+        return ResponseEntity.ok(usuario);
     }
 
     @GetMapping
-    public List<Usuario> getAll() {
-        return usuarioRepository.findAll();
+    public ResponseEntity<List<Usuario>> getAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("{nome}")
-    public Usuario getOne(@PathVariable String nome){
+    @GetMapping("{id}")
+    public ResponseEntity<Usuario> getOne(@PathVariable String id){
 
-        return this.usuarioRepository.findByNome(nome);
+        var idUsuario = UUID.fromString(id);
+        var usuario = this.service.getOne(idUsuario);
+        return ResponseEntity.ok(usuario);
+
     }
 
     @PutMapping
-    public Usuario update(@RequestBody Usuario usuario) {
-        return this.usuarioRepository.save(usuario);
+    public ResponseEntity<Void> update(@RequestBody UserDTO usuarioDTO) {
+        this.service.update(usuarioDTO.toUsuario());
+
+        return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
-    public void delete(@RequestBody Usuario usuario) {
-        this.usuarioRepository.delete(usuario);
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable String id) {
+        var idUsuario = UUID.fromString(id);
+        this.service.delete(idUsuario);
     }
-
 
 }
