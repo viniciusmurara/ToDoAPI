@@ -19,7 +19,7 @@ public class Usuario {
     @Id
     @Column
     @NotBlank
-    private UUID id_usuario;
+    private UUID id;
 
     @Column
     private String nome;

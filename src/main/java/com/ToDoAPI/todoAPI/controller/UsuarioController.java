@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.AbstractController;
 
 import java.net.URI;
 import java.util.List;
@@ -16,14 +17,15 @@ import java.util.UUID;
 @RestController
 @RequestMapping("usuarios")
 @RequiredArgsConstructor
-public class UsuarioController {
+public class UsuarioController implements GenericController  {
 
     private final UsuarioService service;
 
     @PostMapping
     public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
         service.salvar(usuario);
-        return ResponseEntity.ok(usuario);
+        URI location = gerarHeaderLocation(usuario.getId());
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping
