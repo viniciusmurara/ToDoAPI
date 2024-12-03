@@ -9,7 +9,7 @@ import lombok.NonNull;
 import java.util.UUID;
 
 public record UserDTO (
-        UUID id,
+        Integer id,
         @NotBlank(message = "O nome é obrigatório")
                 @Size(min = 4, message = "O nome deve conter no mínimo 4 caractéres")
         String nome,
@@ -17,14 +17,19 @@ public record UserDTO (
         @Email(message = "Email inválido")
         String email,
         @Size(min = 4, message = "A senha deve conter no mínimo 4 caractéres")
-        String senha)
+        String senha,
+        @NotBlank(message = "A role é obrigatória")
+        String role
+)
     {
 
         public Usuario toUsuario() {
             Usuario usuario = new Usuario();
+            usuario.setId(id);
             usuario.setEmail(email);
             usuario.setNome(nome);
             usuario.setSenha(senha);
+            usuario.setRole(role);
 
             return usuario;
         }

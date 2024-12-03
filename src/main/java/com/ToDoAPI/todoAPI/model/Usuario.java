@@ -14,9 +14,9 @@ import java.util.UUID;
 public class Usuario {
 
     @Id
-    @Column(length = 36)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column
     private String nome;
@@ -26,5 +26,8 @@ public class Usuario {
 
     @Column
     private String senha;
+
+    @Column
+    private String role;
 
 }

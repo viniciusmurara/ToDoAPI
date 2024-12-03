@@ -16,16 +16,17 @@ public class UsuarioValidator {
 
     public void validar(Usuario usuario) {
 
-        if(verificarSeExisteLogin(usuario.getEmail())){
+        if(verificarSeExisteLogin(usuario)){
             throw new EmailJaUtilizadoException();
         }
 
     }
-    public boolean verificarSeExisteLogin(String login) {
+    public boolean verificarSeExisteLogin(Usuario usuario) {
 
-        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(login);
+        Optional<Usuario> optionalUsuario =
+                usuarioRepository.findByEmail(usuario.getEmail());
 
-        return optionalUsuario.isPresent();
+        return optionalUsuario.isPresent() && !optionalUsuario.get().equals(usuario);
 
     }
 
