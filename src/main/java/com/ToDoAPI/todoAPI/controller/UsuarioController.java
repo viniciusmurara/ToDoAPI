@@ -22,7 +22,7 @@ public class UsuarioController implements GenericController  {
     private final UsuarioService service;
 
     @PostMapping
-    public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
+    public ResponseEntity<Void> salvar(@RequestBody Usuario usuario) {
         service.salvar(usuario);
         URI location = gerarHeaderLocation(usuario.getId());
         return ResponseEntity.created(location).build();

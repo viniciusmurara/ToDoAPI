@@ -14,7 +14,7 @@ public record UserDTO (
                 @Size(min = 4, message = "O nome deve conter no mínimo 4 caractéres")
         String nome,
         @NotBlank(message = "O email é obrigatório")
-                @Email(message = "Email inválido")
+        @Email(message = "Email inválido")
         String email,
         @Size(min = 4, message = "A senha deve conter no mínimo 4 caractéres")
         String senha)

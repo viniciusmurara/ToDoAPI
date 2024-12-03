@@ -20,6 +20,8 @@ public class UsuarioService {
 
 
     public Usuario salvar (Usuario usuario) {
+//        UUID uuid = UUID.randomUUID();
+//        usuario.setId(uuid);
        this.usuarioValidator.validar(usuario);
        return usuarioRepository.save(usuario);
     }
@@ -33,6 +35,7 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
     public void delete(UUID id) {
+        this.usuarioValidator.validar(usuarioRepository.findById(id).orElse(null));
         usuarioRepository.deleteById(id);
     }
 

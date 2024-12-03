@@ -25,8 +25,7 @@ public class UsuarioValidator {
 
         Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(login);
 
-        return optionalUsuario.isEmpty();
-
+        return optionalUsuario.isPresent();
 
     }
 

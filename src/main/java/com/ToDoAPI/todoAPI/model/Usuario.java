@@ -1,9 +1,6 @@
 package com.ToDoAPI.todoAPI.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +14,8 @@ import java.util.UUID;
 public class Usuario {
 
     @Id
-    @Column
-    @NotBlank
+    @Column(length = 36)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column
