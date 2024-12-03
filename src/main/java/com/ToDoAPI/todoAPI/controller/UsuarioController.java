@@ -22,7 +22,8 @@ public class UsuarioController implements GenericController  {
     private final UsuarioService service;
 
     @PostMapping
-    public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
+    public ResponseEntity<Void> salvar(@RequestBody UserDTO usuarioDTO) {
+        Usuario usuario = usuarioDTO.toUsuario();
         service.salvar(usuario);
         URI location = gerarHeaderLocation(usuario.getId());
         return ResponseEntity.created(location).build();
@@ -34,25 +35,24 @@ public class UsuarioController implements GenericController  {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Usuario> getOne(@PathVariable String id){
+    public ResponseEntity<Usuario> getOne(@PathVariable Integer id){
 
-        var idUsuario = UUID.fromString(id);
-        var usuario = this.service.getOne(idUsuario);
+        var usuario = this.service.getOne(id);
         return ResponseEntity.ok(usuario);
 
     }
 
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody UserDTO usuarioDTO) {
+
         this.service.update(usuarioDTO.toUsuario());
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable String id) {
-        var idUsuario = UUID.fromString(id);
-        this.service.delete(idUsuario);
+    public void delete(@PathVariable Integer id) {
+        this.service.delete(id);
     }
 
 }
