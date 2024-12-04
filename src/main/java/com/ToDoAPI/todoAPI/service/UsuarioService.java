@@ -39,6 +39,9 @@ public class UsuarioService {
         this.usuarioValidator.validar(usuarioRepository.findById(id).orElse(null));
         usuarioRepository.deleteById(id);
     }
+    public Usuario findByEmailAndPassword(String email, String senha) {
+        return this.usuarioRepository.findByEmailAndSenha(email, senha).get();
+    }
 
 
 

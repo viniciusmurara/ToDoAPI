@@ -54,5 +54,11 @@ public class UsuarioController implements GenericController  {
     public void delete(@PathVariable Integer id) {
         this.service.delete(id);
     }
+    @GetMapping("/login")
+    public Usuario login(@RequestParam("email") String email,
+                         @RequestParam("senha") String senha ) {
 
+        return  service.findByEmailAndPassword(email, senha);
+
+    }
 }
