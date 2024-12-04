@@ -14,20 +14,21 @@ import java.util.UUID;
 public class Usuario {
 
     @Id
-    @Column
+    @Column(nullable = false, unique = true, length = 36)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+
+    @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false,length = 500)
     private String senha;
 
-    @Column
+    @Column(nullable = false, length = 50)
     private String role;
 
 }

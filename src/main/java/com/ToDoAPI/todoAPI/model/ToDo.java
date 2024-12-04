@@ -13,13 +13,14 @@ public class ToDo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(length = 1000)
     private String texto;
 
-    @Column
-    private String status;
+    @Column(length = 30,nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StatusToDo status;
 
-    @JoinColumn
+    @JoinColumn(name = "id_usuario")
     @ManyToOne
     private Usuario usuario;
 
