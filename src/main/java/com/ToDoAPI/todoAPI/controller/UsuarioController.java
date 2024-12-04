@@ -4,6 +4,7 @@ import com.ToDoAPI.todoAPI.controller.dto.UserDTO;
 import com.ToDoAPI.todoAPI.model.Usuario;
 import com.ToDoAPI.todoAPI.repository.UsuarioRepository;
 import com.ToDoAPI.todoAPI.service.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class UsuarioController implements GenericController  {
     private final UsuarioService service;
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody UserDTO usuarioDTO) {
+    public ResponseEntity<Void> salvar(@RequestBody @Valid UserDTO usuarioDTO) {
         Usuario usuario = usuarioDTO.toUsuario();
         service.salvar(usuario);
         URI location = gerarHeaderLocation(usuario.getId());
