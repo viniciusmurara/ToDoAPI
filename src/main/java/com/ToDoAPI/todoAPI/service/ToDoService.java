@@ -6,6 +6,8 @@ import com.ToDoAPI.todoAPI.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ToDoService {
@@ -28,6 +30,9 @@ public class ToDoService {
     }
     public void deletarPorId(Integer id){
         this.repository.deleteById(id);
+    }
+    public List<ToDo> pegarTodos(){
+        return this.repository.findAll();
     }
 
 
