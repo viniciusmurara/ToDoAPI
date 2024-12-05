@@ -84,7 +84,7 @@ public class ToDoRepositoryTest {
 
         repository.save(todo);
 
-        Assertions.assertTrue(repository.findById(todo.getId()).get().getStatus() == StatusToDo.CONCLUIDO );
+        Assertions.assertSame(repository.findById(todo.getId()).get().getStatus(), StatusToDo.CONCLUIDO);
     }
     @Test
     public void deletarTodoTest(){

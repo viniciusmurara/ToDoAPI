@@ -27,8 +27,8 @@ public class UsuarioValidator {
                 usuarioRepository.findByEmail(usuario.getEmail());
 
         return optionalUsuario.isPresent() && !optionalUsuario.get().equals(usuario);
-
     }
+
 
 
 

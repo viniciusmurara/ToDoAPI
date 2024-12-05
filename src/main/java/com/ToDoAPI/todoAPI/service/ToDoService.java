@@ -1,9 +1,11 @@
 package com.ToDoAPI.todoAPI.service;
 
+import com.ToDoAPI.todoAPI.Exceptions.ToDoJaSalvoException;
 import com.ToDoAPI.todoAPI.Exceptions.ToDoNaoEncontradoException;
 import com.ToDoAPI.todoAPI.Exceptions.ToDoNaoSalvoException;
 import com.ToDoAPI.todoAPI.model.ToDo;
 import com.ToDoAPI.todoAPI.repository.ToDoRepository;
+import com.ToDoAPI.todoAPI.validator.ToDoValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,25 +17,24 @@ import java.util.Optional;
 public class ToDoService {
 
     private final ToDoRepository repository;
+    private final ToDoValidator validator;
 
     public void salvar(ToDo toDo){
-        this.repository.save(toDo);
+        validator.validarCadastro(toDo);
+        repository.save(toDo);
     }
     public ToDo getById(Integer id){
 
         Optional<ToDo> toDo = this.repository.findById(id);
-
         if (toDo.isEmpty()){
             throw new ToDoNaoEncontradoException();
         }
         return this.repository.findById(id).get();
     }
     public void atualizar(ToDo toDo){
+        this.validator.validadarUpdate(toDo);
+        this.repository.save(toDo);
 
-        if(toDo.getId() != null){
-            this.repository.save(toDo);
-        }
-        throw new ToDoNaoSalvoException();
     }
     public void deletarPorId(Integer id){
         this.repository.deleteById(id);

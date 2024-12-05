@@ -5,12 +5,10 @@ import com.ToDoAPI.todoAPI.model.Usuario;
 import com.ToDoAPI.todoAPI.repository.UsuarioRepository;
 import com.ToDoAPI.todoAPI.validator.UsuarioValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -27,7 +25,9 @@ public class UsuarioService {
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
-    public Usuario getOne(Integer id){
+
+
+    public Usuario buscarPorId(Integer id){
         return usuarioRepository.findById(id).orElse(null);
     }
     @Transactional
