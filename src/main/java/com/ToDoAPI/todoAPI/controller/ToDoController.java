@@ -1,7 +1,9 @@
 package com.ToDoAPI.todoAPI.controller;
 
+import com.ToDoAPI.todoAPI.controller.dto.ToDoRequest;
 import com.ToDoAPI.todoAPI.model.ToDo;
 import com.ToDoAPI.todoAPI.service.ToDoService;
+import com.ToDoAPI.todoAPI.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.List;
 public class ToDoController implements GenericController{
 
     private final ToDoService service;
+    private final UsuarioService usuarioService;
 
     @GetMapping("{id}")
     public ResponseEntity<ToDo> buscarPorId(@PathVariable Integer id) {
@@ -33,9 +36,13 @@ public class ToDoController implements GenericController{
 
 
     @PostMapping
-    public ResponseEntity<Void> salvarToDo(@RequestBody ToDo toDo){
+    public ResponseEntity<Void> salvarToDo(@RequestBody ToDoRequest toDoRequest){
 
-        this.service.salvar(toDo);
+        ToDo toDo = ToDoRequest.toToDo(toDoRequest);
+
+        toDo.setUsuario(usuarioService.buscarPorId(toDoRequest.idUsuario()));
+
+        service.salvar(toDo);
 
         URI location =  gerarHeaderLocation(toDo.getId());
 
