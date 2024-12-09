@@ -1,6 +1,7 @@
 package com.ToDoAPI.todoAPI.controller;
 
 import com.ToDoAPI.todoAPI.controller.dto.ToDoRequest;
+import com.ToDoAPI.todoAPI.controller.dto.ToDoResponse;
 import com.ToDoAPI.todoAPI.model.ToDo;
 import com.ToDoAPI.todoAPI.service.ToDoService;
 import com.ToDoAPI.todoAPI.service.UsuarioService;
@@ -19,19 +20,20 @@ public class ToDoController implements GenericController{
     private final ToDoService service;
     private final UsuarioService usuarioService;
 
+//    @GetMapping("{id}")
+//    public ResponseEntity<ToDo> buscarPorId(@PathVariable Integer id) {
+//
+//        this.service.getById(id);
+//
+//        return ResponseEntity.ok().body(this.service.getById(id));
+//    }
     @GetMapping("{id}")
-    public ResponseEntity<ToDo> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<List<ToDoResponse>> buscarTodosUsuario(@PathVariable Integer id){
 
-        this.service.getById(id);
+        List<ToDoResponse> toDoResponse = ToDoResponse.toToDoResponse(this.service.buscarPorUsuario(id));
 
-        return ResponseEntity.ok().body(this.service.getById(id));
-    }
-    @GetMapping
-    public ResponseEntity<List<ToDo>> buscarTodos(){
 
-        List<ToDo> toDos = this.service.pegarTodos();
-
-        return ResponseEntity.ok().body(toDos);
+        return ResponseEntity.ok().body(toDoResponse);
     }
 
 

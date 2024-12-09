@@ -39,8 +39,9 @@ public class ToDoService {
     public void deletarPorId(Integer id){
         this.repository.deleteById(id);
     }
-    public List<ToDo> pegarTodos(){
-        return this.repository.findAll();
+    public List<ToDo> buscarPorUsuario(Integer id){
+
+        return this.repository.findAllByUsuarioId(id);
     }
 
 
