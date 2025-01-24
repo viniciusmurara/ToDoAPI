@@ -38,7 +38,7 @@ public class ToDoController implements GenericController{
 
 
     @PostMapping
-    public ResponseEntity<Void> salvarToDo(@RequestBody ToDoRequest toDoRequest){
+    public ResponseEntity<ToDoResponse> salvarToDo(@RequestBody ToDoRequest toDoRequest){
 
         ToDo toDo = ToDoRequest.toToDo(toDoRequest);
 
@@ -46,9 +46,13 @@ public class ToDoController implements GenericController{
 
         service.salvar(toDo);
 
+        ToDoResponse  toDoResponse = ToDoResponse.toToDoResponse(toDo);
+
         URI location =  gerarHeaderLocation(toDo.getId());
 
-        return ResponseEntity.created(location).build();
+
+
+        return ResponseEntity.created(location).body(toDoResponse);
     }
 
     @PutMapping
