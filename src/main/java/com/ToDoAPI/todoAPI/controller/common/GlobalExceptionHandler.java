@@ -1,6 +1,7 @@
 package com.ToDoAPI.todoAPI.controller.common;
 
 import com.ToDoAPI.todoAPI.Exceptions.EmailJaUtilizadoException;
+import com.ToDoAPI.todoAPI.Exceptions.ToDoNaoSalvoException;
 import com.ToDoAPI.todoAPI.controller.dto.ErroCampo;
 import com.ToDoAPI.todoAPI.controller.dto.ErroResposta;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErroResposta emailJaUtilizado(EmailJaUtilizadoException ex) {
         return ErroResposta.conflito(ex.getMessage());
+    }
+    @ExceptionHandler(ToDoNaoSalvoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErroResposta toDoNaoSalvoException(ToDoNaoSalvoException ex){
+        return  new ErroResposta(HttpStatus.NOT_FOUND.value(), ex.getMessage(), List.of());
     }
 
 }

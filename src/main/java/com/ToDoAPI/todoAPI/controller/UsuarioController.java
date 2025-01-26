@@ -2,17 +2,14 @@ package com.ToDoAPI.todoAPI.controller;
 
 import com.ToDoAPI.todoAPI.controller.dto.UserDTO;
 import com.ToDoAPI.todoAPI.model.Usuario;
-import com.ToDoAPI.todoAPI.repository.UsuarioRepository;
 import com.ToDoAPI.todoAPI.service.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.AbstractController;
 
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("usuarios")
@@ -22,7 +19,7 @@ public class UsuarioController implements GenericController  {
     private final UsuarioService service;
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody UserDTO usuarioDTO) {
+    public ResponseEntity<Void> salvar(@RequestBody @Valid UserDTO usuarioDTO) {
         Usuario usuario = usuarioDTO.toUsuario();
         service.salvar(usuario);
         URI location = gerarHeaderLocation(usuario.getId());
@@ -37,7 +34,7 @@ public class UsuarioController implements GenericController  {
     @GetMapping("{id}")
     public ResponseEntity<Usuario> getOne(@PathVariable Integer id){
 
-        var usuario = this.service.getOne(id);
+        var usuario = this.service.buscarPorId(id);
         return ResponseEntity.ok(usuario);
 
     }
